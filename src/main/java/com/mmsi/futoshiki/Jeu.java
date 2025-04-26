@@ -42,7 +42,7 @@ public class Jeu extends Scene {
 
         for (int i = 0; i < nombreCases; i++) {
             for (int j = 0; j < nombreCases; j++) {
-                cases[i][j] = new Case();
+                cases[i][j] = new Case(nombreCases);
             }
         }
     }
