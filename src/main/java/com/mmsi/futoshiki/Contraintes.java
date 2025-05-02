@@ -16,7 +16,16 @@ public class Contraintes {
     }
 
     public boolean verifierV(){
-        return false;
+        for( int j =0; j< nombre.cases; j++;){
+            for(int i =0; i< nombre.cases; j++){
+                for( int k =i+1; k<nombre.cases; k++){
+                    if(case[i][j].value == case[k][j].value){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     public boolean verifierI(){
