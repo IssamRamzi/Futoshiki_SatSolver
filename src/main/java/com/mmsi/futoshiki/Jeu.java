@@ -26,6 +26,8 @@ public class Jeu extends Scene {
     ChoiceBox<Integer> choiceBox = new ChoiceBox<>();
     Double padding = 150.0;
     Integer choiceBoxValues[] = {4, 5, 6, 7, 8, 9};
+    Contraintes contraintes;
+
 
     public Jeu(Parent root, int width, int height){
         super(root, width, height);
@@ -39,18 +41,17 @@ public class Jeu extends Scene {
     }
 
     void initAll(){
-
-        grille.getChildren().removeAll();
-        choiceBox.getItems().removeAll();
+        grille.getChildren().clear();
+        choiceBox.getItems().clear();
         initialiserCases();
         afficherGrille();
         initChoiceBox();
         ((AnchorPane) parent).getChildren().add(grille);
-
         AnchorPane.setTopAnchor(grille, padding);
         AnchorPane.setLeftAnchor(grille, padding);
         AnchorPane.setRightAnchor(grille, padding);
         AnchorPane.setBottomAnchor(grille, padding);
+        contraintes = new Contraintes(this);
     }
 
     private void initialiserCases() {
@@ -74,17 +75,25 @@ public class Jeu extends Scene {
     }
 
     public void initChoiceBox(){
+        if ( ((AnchorPane)parent).getChildren().contains(choiceBox) ){
+            ((AnchorPane)parent).getChildren().remove(choiceBox);
+        }
         Label label = new Label("Nombre de cases ");
         choiceBox.getItems().addAll(choiceBoxValues);
         choiceBox.setLayoutY(20);
-        ((AnchorPane)parent).getChildren().add(label);
-        ((AnchorPane)parent).getChildren().add(choiceBox);
-        choiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number newValue) {
-//                System.out.println((int)newValue);
-//                nombreCases = choiceBoxValues[(int)newValue];
-                initAll();
+
+        choiceBox.getItems().clear();
+        choiceBox.getItems().addAll(choiceBoxValues);
+        choiceBox.setValue(nombreCases);
+
+        ((AnchorPane) parent).getChildren().addAll(label, choiceBox);
+
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
+            if (newValue != null && newValue != nombreCases) {
+                nombreCases = newValue;
+                ((AnchorPane) parent).getChildren().remove(grille);
+                cases = new Case[nombreCases][nombreCases];
+                grille = new GridPane();
             }
         });
     }

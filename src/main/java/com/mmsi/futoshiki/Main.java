@@ -14,6 +14,8 @@ public class Main extends Application {
         stage.setTitle("Futoshiki");
         AnchorPane root = new AnchorPane();
         Jeu jeu = new Jeu(root, Utils.tailleFenetre, Utils.tailleFenetre);
+        Contraintes contraintes = new Contraintes(jeu);
+        contraintes.jeu = jeu;
         stage.setScene(jeu);
         stage.show();
     }
