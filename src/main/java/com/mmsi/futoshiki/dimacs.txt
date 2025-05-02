@@ -1,0 +1,33 @@
+/*  au moins un nombre : P(i,j,1)∨P(i,j,2)∨⋯∨P(i,j,N)
+on pose P(i,j,1) = x1 , P(i,j,2) = x2 .... P(i,j,N)= xn;
+donc on obtien x1 ∨ x2 ∨ x3 ∨ x3 ∨ ... xn
+on pose x1 = 1, x2 =2, ... xn =N 
+pour N =3 par exemple on as 
+ 
+ p cnf 3 3
+ 1 2 3 0
+
+ /*
+ au  moins une apparition dans chaque ligne :P(i,1,k)∨P(i,2,k)∨⋯∨P(i,N,k)
+ meme demarche 
+p cnf 3 3 
+1 2 3 0 
+
+/* au plus une apparition  dans chque linge : !P(i,1,k) ∨ !P(i,2,k)∨...∨ !P(i,N,k)
+ P( i,1,k) = x1, P(i,2,k)= x2, ... P(i,N,k) = xn 
+ avec x1 = 1, x2=2, ... xn =N 
+ N=3
+ 
+ p cnf 3 3 
+ -1 -2 -3 0
+
+ /* contrainte d'inegalite :
+  -  P(i,j,k) ⇒ (P(i,j+1,k+1) ∨ … ∨ P(i,j+1,N))  
+    donc on pose P(i,j,k)= x1 , P(i,j+1,k+1) =x2 .... , P(i,j+1,N) = xn
+    N=3
+    en Dimacs :
+    p cnf 3 3
+    -1 2 3 0 
+
+ -   P(i,j,k) ∧ (P(i,j-1,k+1)  ∨ … ∨ P(i,j-1,N)) 
+ 
